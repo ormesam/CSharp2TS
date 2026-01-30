@@ -315,15 +315,21 @@ Or run directly via command line arguments:
 csharp2ts --model-output-folder C:\models_output --model-assembly-path C:\models_assembly --file-casing camel
 ```
 
+For multiple assemblies, use comma-separated paths:
+
+```
+csharp2ts --model-assembly-path C:\assembly1.dll,C:\assembly2.dll --model-output-folder C:\output
+```
+
 ### Configuration Options
 
 | Option                               | Description                                              |
 | ------------------------------------ | -------------------------------------------------------- |
 | --model-output-folder, -mo <path>    | The folder where the generated model files will be saved |
-| --model-assembly-path, -ma <path>    | The path to the model assembly (can be specified multiple times) |
+| --model-assembly-path, -ma <paths>   | The path to the model assembly (comma-separated for multiple paths) |
 | --services-output-folder, -so <path> | The folder where the services will be saved              |
-| --services-assembly-path, -sa <path> | The path to the assembly with the controllers (can be specified multiple times) |
-| --service-generator, -sg <type>      | The type of service - currently only Axios is supported  |
+| --services-assembly-path, -sa <paths> | The path to the assembly with the controllers (comma-separated for multiple paths) |
+| --service-generator, -sg             | Service generator type (currently only 'axios' is supported)  |
 | --file-casing, -fc <style>           | The file name casing style (`camel` or `pascal`)         |
 | --nullable-strings                   | Make all strings nullable in the generated code          |
 
