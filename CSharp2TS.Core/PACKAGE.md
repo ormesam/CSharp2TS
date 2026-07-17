@@ -26,6 +26,35 @@ public enum TestEnum {
 
 
 
+**TSConstants** can be added to a class to generate a TypeScript object containing its `const` field values. Only `const` fields are exported - `static readonly` fields are ignored as their values are not stored in the assembly metadata.
+
+```c#
+[TSConstants]
+public static class AppConstants {
+    public const int MaxPageSize = 100;
+    public const string AppName = "MyApp";
+    public const TestEnum DefaultEnum = TestEnum.Value2;
+}
+```
+
+This generates:
+
+```ts
+import TestEnum from './TestEnum';
+
+const AppConstants = {
+  maxPageSize: 100,
+  appName: 'MyApp',
+  defaultEnum: TestEnum.Value2,
+} as const;
+
+export default AppConstants;
+```
+
+Enum constants reference the generated TypeScript enum (with the import added automatically) when the enum is marked with `TSEnum`, otherwise the numeric value is emitted.
+
+
+
 **TSService** can be added to classes which inherit from `ControllerBase` to generate an api client.
 
 ```c#
@@ -51,11 +80,16 @@ public IActionResult Get() {
 
 
 
-**TSExclude** can be added to properties and API endpoints to exclude it from the TypeScript generation.
+**TSExclude** can be added to properties, const fields and API endpoints to exclude it from the TypeScript generation.
 
 ```c#
 [TSExclude]
 public int ExcludedProperty { get; set; } // Property will not be included in the TypeScript file
+```
+
+```c#
+[TSExclude]
+public const string ExcludedConstant = "excluded"; // Constant will not be included in the TypeScript file
 ```
 
 ```c#
@@ -105,7 +139,7 @@ Multiple `TSImport` attributes can be added to a single controller.
 
 ## Additional Options
 
-**TypeName** can be passed to `TSInterface`, `TSEnum`, or `TSService` to override the generated TypeScript type name.
+**TypeName** can be passed to `TSInterface`, `TSEnum`, `TSConstants`, or `TSService` to override the generated TypeScript type name.
 
 ```c#
 [TSInterface("MyCustomName")]
@@ -114,7 +148,7 @@ public class TestModel {
 }
 ```
 
-**Folder** can be set on `TSInterface`, `TSEnum`, or `TSService` to place the generated file in a subfolder of the output directory.
+**Folder** can be set on `TSInterface`, `TSEnum`, `TSConstants`, or `TSService` to place the generated file in a subfolder of the output directory.
 
 ```c#
 [TSInterface(Folder = "subfolder")]

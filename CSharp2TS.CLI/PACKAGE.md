@@ -1,8 +1,8 @@
-CSharp2TS.CLI is a tool to generate TypeScript files for C# classes, enums and API endpoints. 
+CSharp2TS.CLI is a tool to generate TypeScript files for C# classes, enums, constants and API endpoints. 
 
 ## Getting Started
 
-Install the **CSharp2TS.Core** nuget package in your project. It contains the attributes required to mark your models and controllers for generation by this tool. Supported attributes include `TSInterface`, `TSEnum`, `TSService`, `TSEndpoint`, `TSExclude`, `TSNullable`, and `TSImport`. See the [CSharp2TS.Core docs](../CSharp2TS.Core/PACKAGE.md) for more information on attributes.
+Install the **CSharp2TS.Core** nuget package in your project. It contains the attributes required to mark your models and controllers for generation by this tool. Supported attributes include `TSInterface`, `TSEnum`, `TSConstants`, `TSService`, `TSEndpoint`, `TSExclude`, `TSNullable`, and `TSImport`. See the [CSharp2TS.Core docs](../CSharp2TS.Core/PACKAGE.md) for more information on attributes.
 
 ## Usage
 

@@ -11,11 +11,11 @@
     <PackageProjectUrl>https://github.com/ormesam/CSharp2TS</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ormesam/CSharp2TS</RepositoryUrl>
     <PackageOutputPath>../nupkg</PackageOutputPath>
-    <PackageVersion>0.0.7-alpha</PackageVersion>
+    <PackageVersion>0.0.8-alpha</PackageVersion>
     <PackageReadmeFile>PACKAGE.md</PackageReadmeFile>
     <Copyright>Sam Orme</Copyright>
     <PackageTags>csharp2ts;typescript-generator</PackageTags>
-    <PackageReleaseNotes>Handle generation of public methods from classes to TS interface</PackageReleaseNotes>
+    <PackageReleaseNotes>Add TSConstants attribute for generating TypeScript constants from C# const fields; allow TSExclude on fields</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <Description>CSharp2TS.Core is a lightweight package that contains the attributes required for the **CSharp2TS.CLI** dotnet tool to generate TypeScript models and API services.</Description>
   </PropertyGroup>

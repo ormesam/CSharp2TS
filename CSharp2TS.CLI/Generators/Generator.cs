@@ -1,4 +1,5 @@
 ﻿using CSharp2TS.CLI.Generators.Common;
+using CSharp2TS.CLI.Generators.TSConstants;
 using CSharp2TS.CLI.Generators.TSEnums;
 using CSharp2TS.CLI.Generators.TSInterfaces;
 using CSharp2TS.CLI.Generators.TSServices;
@@ -44,6 +45,7 @@ namespace CSharp2TS.CLI.Generators {
                 using (var assembly = LoadAssembly(assemblyPath)) {
                     GenerateInterfaces(assembly.MainModule, options);
                     GenerateEnums(assembly.MainModule, options);
+                    GenerateConstants(assembly.MainModule, options);
                 }
             }
         }
@@ -58,6 +60,12 @@ namespace CSharp2TS.CLI.Generators {
             var interfaces = GetTypesByAttribute(module, typeof(TSInterfaceAttribute));
 
             foreach (var type in interfaces) {
+                files.Add(type.FullName, NameUtility.GetFileDetails(type, options, options.ModelOutputFolder!));
+            }
+
+            var constants = GetTypesByAttribute(module, typeof(TSConstantsAttribute));
+
+            foreach (var type in constants) {
                 files.Add(type.FullName, NameUtility.GetFileDetails(type, options, options.ModelOutputFolder!));
             }
         }
@@ -124,6 +132,22 @@ namespace CSharp2TS.CLI.Generators {
             }
 
             TSEnumGenerator generator = new();
+
+            foreach (TypeDefinition type in types) {
+                string fileContents = generator.Generate(type);
+
+                GenerateFile(files[type.FullName], fileContents);
+            }
+        }
+
+        private void GenerateConstants(ModuleDefinition module, Options options) {
+            var types = GetTypesByAttribute(module, typeof(TSConstantsAttribute));
+
+            if (!types.Any()) {
+                return;
+            }
+
+            TSConstantsGenerator generator = new(files, options);
 
             foreach (TypeDefinition type in types) {
                 string fileContents = generator.Generate(type);
