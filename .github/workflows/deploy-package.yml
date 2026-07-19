@@ -8,10 +8,11 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
-
+  build-and-publish:
     runs-on: ubuntu-latest
-
+    permissions:
+      id-token: write  # enable GitHub OIDC token issuance for this job
+    
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
@@ -24,5 +25,14 @@ jobs:
       run: dotnet build --no-restore -c Release
     - name: Pack
       run: dotnet pack -c Release  --no-build --no-restore
-    - name: Publish
+    
+      # Get a short-lived NuGet API key
+    - name: NuGet login (OIDC → temp API key)
+      uses: NuGet/login@v1
+      id: login
+      with:
+        user: ${{ secrets.NUGET_USER }}
+  
+    # Push the package
+    - name: NuGet push
       run: dotnet nuget push "nupkg/*.nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json  --skip-duplicate
